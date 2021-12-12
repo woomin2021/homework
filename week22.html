@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+
+    <!-- 구글폰트 -->
+    <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
+
+    <!-- jQuery를 import 합니다 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+    <title>상품판매서</title>
+    <style>
+        * {
+            font-family: 'Stylish', sans-serif;
+        }
+
+        .page-wraper {
+            width: 400px;
+            margin: 10px auto;
+        }
+
+
+        .margin {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+
+    </style>
+    <script>
+        window.addEventListener('DOMContentLoaded', function () {
+            $.ajax({
+                type: "GET", // GET 방식으로 요청한다.
+                url: "https://api.manana.kr/exchange/rate.json",
+                data: {}, // 요청하면서 함께 줄 데이터 (GET 요청시엔 비워두세요)
+                success: function (response) {
+                    $("#change").text(`달러-원 환율: ${response[1]['rate']}`)
+                }
+            })
+        })
+        this.stack = 0
+
+        function buy() {
+
+            var need = [];
+            if ($("#name").val() == '') {
+                need.push('이룸')
+            }
+            if ($("#home").val() == '') {
+                need.push('주소')
+            }
+            if ($("#수량").val() == '') {
+                need.push('갯수')
+            }
+            if ($("#number").val() == '') {
+                need.push('번호')
+            }
+            if (need.length != 0) {
+
+                alert(need + '를 입력')
+            } else if ($("#number").val().length != 11) {
+                alert('전화번호를 확인')
+            } else {
+                this.stack = this.stack + 1
+                let tempHtml = `<tr>
+            <th scope="row">${this.stack}</th>
+            <td >${$('#name').val()}</td>
+            <td>${$('#home').val()}</td>
+            <td>${$('#number').val()}</td>
+        </tr>`
+                $('#user-info').append(tempHtml)
+                alert('주문 완료.')
+            }
+
+
+        }
+    </script>
+  </head>
+  <body>
+    <div class="page-wraper">
+      <div class="page-wraper">
+      <img src="g1.jpg." class="page-wraper"/>
+    <div><span style="font-size: 200%;font-weight: bold" >마우스</span> 가격:100000/개</div>
+
+    <p><span style="font-size: 70%">잘 작동하는 마우스
+      <h1 class="margin">주문하기</h1>
+      <p style="color: blue" id="change">환율정보</p>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="주문자명">주문자</span>
+        </div>
+        <input id="name" type="text" class="form-control" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <label class="input-group-text" for="수량">수량</label>
+        </div>
+        <select class="custom-select" id="수량">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+        </select>
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="집주소">주소</span>
+        </div>
+        <input id="home" type="text" class="form-control" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default">
+      </div>
+      <div class="input-group mb-3">
+        <div class="input-group-prepend">
+          <span class="input-group-text" id="전화번호">전화번호</span>
+        </div>
+        <input id="number" type="text" class="form-control" aria-label="Default"
+               aria-describedby="inputGroup-sizing-default" placeholder="- 을 제외한 전화번호를 입력해주세요">
+      </div>
+
+      <div class="margin">
+        <button type="submit" class="btn btn-primary" onclick="buy()"> 주문</button>
+      </div>
+
+    </div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">주문자</th>
+        <th scope="col">주소</th>
+        <th scope="col">번호.</th>
+      </tr>
+      </thead>
+      <tbody id="user-info">
+
+
+      </tbody>
+    </table>
+  </body>
+</html>
